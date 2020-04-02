@@ -4,33 +4,46 @@ import { ISquare } from "../domain/entity";
 
 interface BoardProps {
   squares: ISquare[];
+  line: number[] | null;
   onClick: (i: number) => void;
 }
 
-const Board: React.SFC<BoardProps> = ({ squares, onClick }) => {
-  const renderSquare = (i: number) => (
-    <Square value={squares[i]} onClick={() => onClick(i)} />
-  );
+const Board: React.SFC<BoardProps> = ({ squares, line, onClick }) => {
+  const renderSquare = (i: number) => {
+    let isHighlight = false;
+    if (line != null && line.includes(i)) {
+      isHighlight = true;
+    }
+
+    return (
+      <Square
+        key={i}
+        value={squares[i]}
+        isHighlight={isHighlight}
+        onClick={() => onClick(i)}
+      />
+    );
+  };
 
   return (
     <div>
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className="board-row">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="board-row">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
+      {Array(3)
+        .fill(0)
+        .map((_, i) => {
+          return (
+            <BoardRow key={i}>
+              {Array(3)
+                .fill(0)
+                .map((_, j) => renderSquare(i * 3 + j))}
+            </BoardRow>
+          );
+        })}
     </div>
   );
+};
+
+const BoardRow: React.FC = ({ children }) => {
+  return <div className="board-row">{children}</div>;
 };
 
 export default Board;

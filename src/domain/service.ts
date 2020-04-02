@@ -14,17 +14,28 @@ export function calculateWinner(squares: ISquare[]) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return {
+        winner: squares[a],
+        line: [a, b, c]
+      };
     }
   }
   return null;
 }
 
-export const getStatus = (winner: ISquare, xIsNext: boolean) => {
+export const getStatus = (
+  winner: ISquare,
+  xIsNext: boolean,
+  isDraw: boolean = false
+) => {
+  if(isDraw === true){
+    return "Draw";
+  }
+
   if (winner) {
     return `Winner: ${winner}`;
   } else {
     const nextPlayer = xIsNext ? "X" : "O";
     return `Next player: ${nextPlayer}`;
   }
-}
+};

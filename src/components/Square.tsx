@@ -3,12 +3,15 @@ import React from "react";
 
 interface SquareProps {
   value: ISquare;
+  isHighlight: boolean;
   onClick: () => void;
 }
 
-const Square: React.SFC<SquareProps> = ({ value, onClick }) => {
+const Square: React.SFC<SquareProps> = ({ value,isHighlight, onClick }) => {
+  const addClass = isHighlight? "highlight" : "";
+
   return (
-    <button className="square" onClick={onClick}>
+    <button className={`square ${addClass}`} onClick={onClick}>
       {value}
     </button>
   );

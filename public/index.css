@@ -48,4 +48,12 @@ body {
   .game-info {
     margin-left: 20px;
   }
+
+  .bold{
+    font-weight: 900;
+  }
+
+  .highlight{
+    background-color: yellow;
+  }
   
